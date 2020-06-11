@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:jee="http://www.springframework.org/schema/jee"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd"
+	   default-lazy-init="true">
+        
+	<description>EOS示例配置 </description>
+
+	<!-- 数据源配置, 使用Tomcat JDBC连接池-->
+	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close" lazy-init="false">
+		<property name="driverClassName" value="${jdbc.driver}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+
+		<property name="defaultAutoCommit" value="true"/>
+		<property name="maxActive" value="${jdbc.pool.maxActive}"/>
+		<property name="maxIdle" value="${jdbc.pool.maxIdle}"/>
+		<property name="minIdle" value="${jdbc.pool.minIdle}"/>
+		<property name="maxWait" value="${jdbc.pool.maxWait}"/>
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.pool.minEvictableIdleTimeMillis}"/>
+		<property name="removeAbandoned" value="${jdbc.pool.removeAbandoned}"/>
+		<property name="removeAbandonedTimeout" value="${jdbc.pool.removeAbandonedTimeout}"/>
+		<property name="testWhileIdle" value="true"/>
+		<property name="validationQuery" value="select 1"/>
+	</bean>
+
+	<!-- 数据源配置, 使用Tomcat JDBC连接池-->
+	<bean id="dataSource2" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close" lazy-init="false">
+		<property name="driverClassName" value="${jdbc.driver}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+
+		<property name="defaultAutoCommit" value="true"/>
+		<property name="maxActive" value="${jdbc.pool.maxActive}"/>
+		<property name="maxIdle" value="${jdbc.pool.maxIdle}"/>
+		<property name="minIdle" value="${jdbc.pool.minIdle}"/>
+		<property name="maxWait" value="${jdbc.pool.maxWait}"/>
+		<property name="minEvictableIdleTimeMillis" value="${jdbc.pool.minEvictableIdleTimeMillis}"/>
+		<property name="removeAbandoned" value="${jdbc.pool.removeAbandoned}"/>
+		<property name="removeAbandonedTimeout" value="${jdbc.pool.removeAbandonedTimeout}"/>
+		<property name="testWhileIdle" value="true"/>
+		<property name="validationQuery" value="select 1"/>
+	</bean>
+
+	<!-- EOS 所需 jdbc组件 -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<!-- TCC 所需 jdbc组件 -->
+	<bean id="jdbcTemplate2" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!--使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+	<!-- 事务配置 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<bean id="authSDKClient" class="com.yonyou.cloud.auth.sdk.client.AuthSDKClient">
+		<constructor-arg name="accessKey" value="${access.key}" />
+		<constructor-arg name="accessSecret" value="${access.secret}" />
+	</bean>
+
+	<!--eos组件配置综合 -->
+	<bean id="eosConfig" class="com.yonyou.cloud.config.eos.EosConfig">
+
+		<property name="jdbcTemplate" ref="jdbcTemplate"/>
+		<property name="transactionManager" ref="transactionManager"/>
+		<property name="authSDKClient" ref="authSDKClient"/>
+		<property name="fullScanIntevalSend" value="0"/>
+		<property name="fullScanIntevalActionLog" value="0"/>
+
+		<!-- 开启自动删除表，默认0不删除，非0删除 -->
+		<property name="autoDeleteTable" value="true"/>
+
+		<!-- 自动删除多少天前的表 -->
+		<property name="autoDeleteBeforeDays" value="1"/>
+
+		<!-- 定时器只扫描当天的表，默认10天 -->
+		<property name="timerDays" value="1"/>
+
+		<!-- 多少时间执行一次删除表，默认一天 -->
+		<property name="cronForAutoDeteTable" value="10000"/>
+		<!-- 多少时间执行一次移动失败记录到bak表 ，默认一天-->
+		<property name="cronForMoveData" value="10000"/>
+
+		<!-- eos发送异常时重试间隔，个数与maxSendTryErrCount一致
+		<property name="maxSendTryGap">
+			<list>
+				<value>100000</value>
+				<value>200000</value>
+				<value>300000</value>
+				<value>400000</value>
+				<value>500000</value>
+			</list>
+		</property>
+		-->
+		<!-- eos接收异常时重试间隔，个数与maxRecvTryErrCount一致
+		<property name="maxRecvTryGap">
+			<list>
+				<value>100000</value>
+				<value>200000</value>
+				<value>300000</value>
+				<value>400000</value>
+				<value>500000</value>
+			</list>
+		</property>
+		-->
+		<!-- <property name="dbType" value="oracle"/> -->
+		<property name="eosCenterUrl" value="${eos.cloud.url}"/>
+	</bean>
+
+	<bean id="tccMonitorConfig"
+		  class="com.yonyou.cloud.config.TccMonitorConfig">
+		<property name="jdbcTemplate" ref="jdbcTemplate2" />
+		<property name="tccMonitorUrl" value="${tcc.cloud.url}"/>
+		<!-- <property name="tccMonitorUrl" value="${tcc.cloud.url:http://localhost/eos-console/}"/> -->
+	</bean>
+	
+</beans>
