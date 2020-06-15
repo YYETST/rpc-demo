@@ -1,4 +1,4 @@
-package com.yonyou.server.service;
+package com.yonyou.provider.service;
 
 import ms.dto.SupportEntity;
 import ms.service.IRpcMockService;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class RpcMockServiceImpl implements IRpcMockService {
     @Override
     public SupportEntity getSupportInfo() throws Exception {
-        SupportEntity supportEntity = new SupportEntity("nscer","com.yonyou.server11111:this is a test","007");
+        SupportEntity supportEntity = new SupportEntity("nscer","com.yonyou.server:this is a test","007");
         return supportEntity;
     }
 }

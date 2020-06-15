@@ -2,15 +2,72 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <artifactId>mytestrpc</artifactId>
         <groupId>com.yonyou</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>com.yonyou</groupId>
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>api</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.yonyou.cloud.middleware</groupId>
+            <artifactId>mwclient</artifactId>
+            <version>${mw.version}</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.yonyou.cloud.middleware</groupId>
+            <artifactId>iris-springboot-support</artifactId>
+            <version>${mw.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${commons-collections}</version>
+        </dependency>
+        <!-- IUAP上下文 begin -->
+        <dependency>
+            <groupId>com.yonyou.iuap</groupId>
+            <artifactId>iuap-generic</artifactId>
+            <version>${iuap-generic.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yonyou.cloud.middleware</groupId>
+            <artifactId>iris-iuap-support</artifactId>
+            <version>${iris-iuap.version}</version>
+        </dependency>
+        <!-- IUAP上下文 end -->
+        <dependency>
+            <groupId>com.yonyou.cloud.middleware</groupId>
+            <artifactId>eos-spring-support</artifactId>
+            <version>${mw.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yonyou.cloud.middleware</groupId>
+            <artifactId>tcc</artifactId>
+            <version>${tcc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yonyou.cloud</groupId>
+            <artifactId>auth-sdk-client</artifactId>
+            <version>${auth-sdk-client.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yonyou.iuap</groupId>
+            <artifactId>iuap-dubbox</artifactId>
+            <version>3.2.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yonyou.cloud.middleware</groupId>
+            <artifactId>iris-dubbo-support</artifactId>
+            <version>${mw.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

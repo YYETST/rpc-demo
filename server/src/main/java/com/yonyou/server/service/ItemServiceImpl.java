@@ -1,6 +1,7 @@
 package com.yonyou.server.service;
 
 import com.yonyou.iuap.context.InvocationInfoProxy;
+import lombok.extern.slf4j.Slf4j;
 import ms.dto.ItemEntity;
 import ms.service.IItemInfoService;
 import org.springframework.stereotype.Service;

@@ -20,7 +20,7 @@ access:
   secret: ueDfvMponftzoAFN96myOb6aw3zNmT
 
 app:
-  tag:1.0
+  tag: 1.0
 
 eos:
   cloud:

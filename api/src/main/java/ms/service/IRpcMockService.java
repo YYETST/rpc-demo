@@ -15,7 +15,7 @@ import ms.dto.SupportEntity;
  *  * ---本例为指定ip地址-通过注解的方式实现
  */
 
-@RpcMock(serviceIp = "10.6.207.30:8083")    //如果不能调通请加上应用context再试
+@RpcMock(serviceIp = "10.6.207.30:8081")    //如果不能调通请加上应用context再试
 @RemoteCall(AppInfoConstant.APP_INF_SERVER)
 public interface IRpcMockService {
 

@@ -16,7 +16,7 @@ import com.yonyou.cloud.middleware.rpc.Fallback;
  *
  * @Fallback(window=10, threshold=0, ratio=0, timeout=0)
  */
-@Fallback(window=10, threshold=40, ratio=10, timeout=2000)
+@Fallback(window=10, threshold=0, ratio=0, timeout=0)
 public class FallBackProviderService implements IProviderService {
     @Override
     public ItemEntity getItemInfo() throws Exception {

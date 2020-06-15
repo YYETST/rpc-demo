@@ -39,7 +39,7 @@ public class TccServiceImpl implements ITccService {
             e.printStackTrace();
             throw new RuntimeException("参数序列化异常");
         }
-        return dto;
+        throw new RuntimeException("参数序列化异常");
     }
 
     @Override
