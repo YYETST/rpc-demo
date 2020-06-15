@@ -23,6 +23,12 @@
         </dependency>
         <dependency>
             <groupId>com.yonyou.cloud.middleware</groupId>
+            <artifactId>middleware</artifactId>
+            <version>${mw.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.yonyou.cloud.middleware</groupId>
             <artifactId>iris-springboot-support</artifactId>
             <version>${mw.version}</version>
         </dependency>
